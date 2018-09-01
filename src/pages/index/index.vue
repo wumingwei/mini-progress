@@ -29,9 +29,7 @@
     data() {
       return {
         motto: 'Hello World',
-        userInfo: {
-          name: "测试"
-        }
+        userInfo: {}
       }
     },
 
