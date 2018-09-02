@@ -8,7 +8,9 @@ const controllers = require('../controllers')
 
 // 从 sdk 中取出中间件
 // 这里展示如何使用 Koa 中间件完成登录态的颁发与验证
-const { auth: { authorizationMiddleware, validationMiddleware } } = require('../qcloud')
+const {
+    auth: { authorizationMiddleware, validationMiddleware }
+} = require('../qcloud')
 
 // --- 登录与授权 Demo --- //
 // 登录接口
@@ -31,5 +33,8 @@ router.post('/tunnel', controllers.tunnel.post)
 router.get('/message', controllers.message.get)
 // POST 用来处理微信转发过来的客服消息
 router.post('/message', controllers.message.post)
+
+// demo 测试
+router.get('/demo', controllers.demo)
 
 module.exports = router
