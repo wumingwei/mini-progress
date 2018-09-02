@@ -1,9 +1,8 @@
 {
-  "pages": ["pages/myCenter/main", "pages/book/main", "pages/index/main"],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "微书橱",
+    "navigationBarTitleText": "我的藏书",
     "navigationBarTextStyle": "black"
   }
 }

@@ -4,20 +4,20 @@
 </template>
 <script>
   export default {
-    data() {
-      return {
+  	data() {
+  		return {
 
-      }
-    },
-    ready() {
+  		}
+  	},
+  	ready() {
 
-    },
-    attached() {
+  	},
+  	attached() {
 
-    },
-    methods: {
+  	},
+  	methods: {
 
-    }
+  	}
   }
 </script>
 <style lang='scss' scoped>
