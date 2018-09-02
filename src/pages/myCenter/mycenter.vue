@@ -28,19 +28,19 @@
 	</div>
 </template>
 <script>
+	import { get } from '../../utils'
 	/* eslint-disable*/
 	export default {
 		data() {
 			return {
 				userPhoto: require('../../assets/images/userImg.jpg'),
-				menulist: [
-					{ iconImg: "", iconTitle: "我的藏书", redirectUrl: "" },
-					{ iconImg: "", iconTitle: "我的关注", redirectUrl: "" },
-					{ iconImg: "", iconTitle: "心愿书单", redirectUrl: "", hasGap: true },
-					{ iconImg: "", iconTitle: "设置", redirectUrl: "" },
-					{ iconImg: "", iconTitle: "关于我们", redirectUrl: "" }
-				],
+				menulist: [],
 			}
+		},
+		async created() {
+			const menuIistData = await get('/weapp/menulist')
+			console.log(menuIistData)
+			this.menulist = menuIistData;
 		},
 		ready() {
 

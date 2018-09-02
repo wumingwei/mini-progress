@@ -1,11 +1,11 @@
 <script>
-	import { get } from './utils'
+	// import { get } from './utils'
 	export default {
-		async created() {
-			const res = await get('/weapp/demo')
-			console.log(res)
-			console.error(123)
-		}
+		// async created() {
+		// 	const res = await get('/weapp/demo')
+		// 	console.log(res)
+		// 	console.error(123)
+		// }
 	}
 </script>
 
