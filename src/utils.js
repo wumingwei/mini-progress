@@ -17,3 +17,27 @@ export function get(url) {
 		})
 	})
 }
+
+export function showToast(type, text, duration, ifHasMask) {
+	wx.showToast({
+		title: text,
+		icon: type, // success/loading/none
+		duration: duration || 1500,
+		mask: ifHasMask || false
+	})
+}
+
+export function showModel(params) {
+	wx.showModal({
+		title: params.title || '提示',
+		content: params.content,
+		showCancel: params.content || false,
+		cancelText: params.cancelText || '取消',
+		cancelColor: params.cancelColor || '#000000',
+		confirmText: params.confirmText || '确定',
+		confirmColor: params.confirmColor || '#3CC51F',
+		success: params.success || function () {},
+		fail: params.fail || function () {},
+		complete: params.complete || function () {}
+	})
+}

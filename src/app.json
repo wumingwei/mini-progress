@@ -1,9 +1,41 @@
 {
-  "pages": ["pages/myCenter/main", "pages/book/main", "pages/index/main"],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "微书橱",
-    "navigationBarTextStyle": "black"
-  }
+	"pages": ["pages/index/main", "pages/book/main", "pages/myCenter/main"],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "图书精灵",
+		"navigationBarTextStyle": "black"
+	},
+	"tabBar": {
+		"color": "#666",
+		"backgroundColor": "#fff",
+		"borderStyle": "black",
+		"position": "bottom",
+		"selectedColor": "#1296db",
+		"list": [
+			{
+				"pagePath": "pages/index/main",
+				"text": "首页",
+				"iconPath": "./images/bookshelves.png",
+				"selectedIconPath": "./images/bookshelves-active.png"
+			},
+			{
+				"pagePath": "pages/book/main",
+				"text": "分类",
+				"iconPath": "./images/classifysearch.png",
+				"selectedIconPath": "./images/classifysearch-active.png"
+			},
+			{
+				"pagePath": "pages/myCenter/main",
+				"text": "我的",
+				"iconPath": "./images/myCenter.png",
+				"selectedIconPath": "./images/myCenter-active.png"
+			}
+		]
+	},
+	"networkTimeout": {
+		"request": 10000,
+		"downloadFile": 10000
+	},
+	"debug": true
 }
