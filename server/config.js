@@ -32,7 +32,7 @@ const CONF = {
         port: 3306,
         user: 'root',
         db: 'cAuth',
-        pass: '',
+        pass: 'weixin',
         char: 'utf8mb4'
     },
 
