@@ -1,5 +1,5 @@
 {
-	"pages": ["pages/index/main", "pages/book/main", "pages/myCenter/main"],
+	"pages": ["pages/index/main", "pages/classify/main", "pages/myCenter/main"],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#fff",
@@ -20,7 +20,7 @@
 				"selectedIconPath": "./images/bookshelves-active.png"
 			},
 			{
-				"pagePath": "pages/book/main",
+				"pagePath": "pages/classify/main",
 				"text": "分类",
 				"iconPath": "./images/classifysearch.png",
 				"selectedIconPath": "./images/classifysearch-active.png"
