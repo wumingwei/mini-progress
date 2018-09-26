@@ -1,31 +1,52 @@
 <template>
-	<div class="page-index">
+	<div class="page-index" @click="scrollToListTop">
+
+		<div class="index-scrollToTop"></div>
+
 		<!-- seach搜索框 -->
 		<div class="index-search">
 			<div class="index-search__box">
-				<input class="box-input" v-model="searchText" type="text" @blur="searchBlur" @focus="searchFocus" placeholder="搜索书名、作者、出版社">
-				<!-- 搜索按钮 -->
-				<text class="box-btn" v-show="showSearchBtn || searchText" @click="submitSearch">搜索</text>
+				<input class="box-input" type="text" @blur="searchBlur" @focus="searchFocus" placeholder="搜索书名、作者、出版社">
 			</div>
 			<image class="index-search__scanicon" :src="scanIcon" @click="scanBook"></image>
 		</div>
+
 		<!-- moto 座右铭-->
-		<div class="index-moto">
+		<div class="index-moto" @click="scrollToListTop">
 			<div class="index-moto__content">
 				一个人要以清晰的心智和从容的步履走过岁月,他的精神中不能缺少淡泊. 一个人要以清晰的心智和从容的步履走过岁月,他的精神中不能缺
 			</div>
 			<div class="index-moto__author">
 				—汪国真
 			</div>
+		</div>
+
+		<!-- 已阅读时长汇总 -->
+		<div class="index-hasRead">
+			<div class="index-hasRead__title">
+				<span class="title-label">在图书精灵已累计阅读</span>
+				<span class="title-iconfont"></span>
+			</div>
+			<!-- 已阅读时长统计 -->
+			<div class="index-hasRead__container">
+				<!-- 阅读总时长 -->
+				<div class="container-totleMinutes">
+					<span class="container-totleMinutes__minutes">200</span>
+					<span class="container-totleMinutes__unit">分钟</span>
+				</div>
+				<!-- 今日阅读时长 -->
+				<div class="container-todayMinutes">
+					<span class="container-todayMinutes__title">今日阅读</span>
+					<p class="container-todayMinutes__minutes">45</p>
+					<span class="container-todayMinutes__unit">分钟</span>
+				</div>
+			</div>
 
 		</div>
-		<!-- 已阅读时长/本数 -->
-		<div class="index-hasRead">
-			本周累计阅读{{hasRead}}分钟
-		</div>
+		<!-- 个性读书计划 -->
+
 		<!-- 图书列表 -->
 		<ul class="index-booklist">
-
 			<li class="index-booklist__item">
 				<div class="item-box">
 					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
@@ -62,55 +83,7 @@
 					<text class="item-box__text">图书名称</text>
 				</div>
 			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
-				<div class="item-box">
-					<image class="item-box__img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536312033783&di=9dc2aeadce66e0d61206911943803956&imgtype=0&src=http%3A%2F%2Fimg62.ddimg.cn%2Fdigital%2Fproduct%2F33%2F88%2F1900773388_cc_cover.jpg%3Fversion%3Dnull"></image>
-					<text class="item-box__text">图书名称</text>
-				</div>
-			</li>
-			<li class="index-booklist__item">
+			<li class="index-booklist__item" @click="testScrollTop">
 				<div class="addbook">十</div>
 			</li>
 		</ul>
@@ -124,15 +97,32 @@
 			return {
 				hasRead: 100,
 				scanIcon: require('../../assets/images/scan.png'),
-				showSearchBtn: false,
-				searchText: ''
+				scrollTop: 0,
+				// 名言容器的上边距
+				motoTop: 0,
+				// 名言容器的高度
+				motoHeight: 0,
+				// 已读容器的上边距
+				hasReadTop: 0,
+				// 已读容器的高度
+				hasReadHeight: 0,
+				// 列表容器的上边距
+				bookListTop: 0,
+				// 列表容器的高度
+				bookListHeight: 0
 			}
 		},
-
-		components: {
+		onPageScroll: function (e) {
+			this.scrollTop = e.scrollTop
+			console.log('this.scrollTop:', this.scrollTop)
 		},
-
 		methods: {
+			scrollToTop() {
+				wx.pageScrollTo({
+					scrollTop: 0,
+					duration: 500
+				})
+			},
 			// 扫码录入图书
 			scanBook() {
 				wx.scanCode({
@@ -148,16 +138,15 @@
 			//
 			searchBlur() {
 				console.log('Blur')
-				this.showSearchBtn = false
+				// this.showSearchBtn = false
 			},
 			searchFocus() {
 				console.log('focus')
-				this.showSearchBtn = true
+				// this.showSearchBtn = true
+				wx.navigateTo({
+					url: '/pages/search/main?pageFrom=indexSearchBox'
+				})
 			}
-		},
-
-		created() {
-
 		}
 	}
 </script>
@@ -176,9 +165,9 @@
 			top: 0rpx;
 			left: 0;
 			right: 0;
+			z-index: 1000;
 			height: 72rpx;
-			padding: 0 34rpx;
-			padding-top: 16rpx;
+			padding: 16rpx 34rpx;
 			background-color: #f6f6f6;
 			display: flex;
 			flex-direction: row;
@@ -222,8 +211,7 @@
 		.index-moto {
 			width: 80%;
 			padding: 5%;
-			margin: 0 auto;
-			margin-bottom: 20rpx;
+			margin: 20rpx auto;
 			background-color: #fff;
 			box-shadow: 10rpx 10rpx 6rpx #e5e5e5;
 			&__content {
@@ -243,14 +231,65 @@
 				color: #ccc;
 			}
 		}
+		//  已读信息
 		.index-hasRead {
-			margin-bottom: 10rpx;
-			width: 100%;
-			height: 80rpx;
-			line-height: 80rpx;
+			width: 80%;
+			padding: 10rpx 5%;
+			margin: 30rpx auto;
+			box-shadow: 10rpx 10rpx 6rpx #e5e5e5;
 			font-size: 28rpx;
-			text-align: center;
-			color: #666;
+			background: #fff;
+			&__title {
+				display: block;
+				width: 100%;
+				height: 80rpx;
+				line-height: 80rpx;
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+				.title-label {
+					color: #666;
+				}
+				.title-iconfont {
+					display: block;
+					width: 12rpx;
+					height: 12rpx;
+					border-top: 4rpx solid #666;
+					border-right: 4rpx solid #666;
+					transform: translateX(8rpx) rotate(45deg);
+				}
+			}
+			&__container {
+				width: 100%;
+				height: 80rpx;
+				display: flex;
+				flex-direction: row;
+				align-items: flex-end;
+				justify-content: space-between;
+				line-height: 80rpx;
+				.container-totleMinutes {
+					&__minutes {
+						color: rgba($color: #000000, $alpha: 0.6);
+						font-size: 60rpx;
+					}
+					&__unit {
+						margin-left: 10rpx;
+						color: #666;
+					}
+				}
+				.container-todayMinutes {
+					color: #666;
+					height: 80rpx;
+					line-height: 80rpx;
+					display: flex;
+					flex-direction: row;
+					&__minutes {
+						color: #1296db;
+						margin: 0 8rpx;
+					}
+				}
+			}
 		}
 		.index-booklist {
 			width: 90%;
@@ -259,7 +298,6 @@
 			flex-direction: row;
 			flex-wrap: wrap;
 			justify-content: flex-start;
-			background-color: #fff;
 			align-items: center;
 			&__item {
 				width: 33.3333%;
@@ -275,11 +313,12 @@
 					&__img {
 						width: 180rpx;
 						height: 240rpx;
+						box-shadow: 16rpx 16rpx 6rpx #e5e5e5;
 					}
 					&__text {
 						width: 90%;
-						height: 80rpx;
-						line-height: 80rpx;
+						height: 60rpx;
+						line-height: 60rpx;
 						font-size: 28rpx;
 						text-align: center;
 						color: #666;

@@ -1,5 +1,5 @@
 {
-	"pages": ["pages/index/main", "pages/classify/main", "pages/myCenter/main"],
+	"pages": ["pages/index/main", "pages/search/main", "pages/classify/main", "pages/myCenter/main", "pages/moto/main"],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#fff",
@@ -15,13 +15,13 @@
 		"list": [
 			{
 				"pagePath": "pages/index/main",
-				"text": "首页",
+				"text": "书架",
 				"iconPath": "./images/bookshelves.png",
 				"selectedIconPath": "./images/bookshelves-active.png"
 			},
 			{
 				"pagePath": "pages/classify/main",
-				"text": "分类",
+				"text": "书库",
 				"iconPath": "./images/classifysearch.png",
 				"selectedIconPath": "./images/classifysearch-active.png"
 			},

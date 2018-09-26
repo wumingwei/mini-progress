@@ -7,11 +7,11 @@
 		"minified": true,
 		"newFeature": true
 	},
-	"miniprogramRoot": "./dist/",
-	"qcloudRoot": "./server/",
+	"miniprogramRoot": "dist/",
+	"qcloudRoot": "server/",
 	"compileType": "miniprogram",
 	"appid": "wx870e0eb3e8604a61",
-	"projectname": "my-project",
+	"projectname": "iRead",
 	"condition": {
 		"search": {
 			"current": -1,

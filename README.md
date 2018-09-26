@@ -6,7 +6,7 @@
 
 ```bash
 # 进入项目根目录
-cd my-project
+cd iRead
 
 # 安装依赖
 npm install
@@ -38,14 +38,35 @@ npm run dev
 *   技术栈列表:
 
     *   mpvue 小程序框架
-
     *   koa: 基于 node.js 的轻量级后端服务器框架
-
     *   async/await 数据请求
-
     *   基于腾讯云的小程序本地开发环境
+    *   小程序开发工具
+    *   vue-cli 脚手架
+    *   豆瓣图书 API
+    *   地图 API
+    *   vue.js 前端框架
+    *   mpvue 微信小程序框架
+    *   webpack 构建工具
+    *   eslint 代码  检查工具
+    *   前端组件化开发
+    *   sass 预编译
+    *   ES6 特性
+    *   async+await 
+    *   小程序官方 API
+    *   nodejs 网络请求
+    *   Koa2 后端框架
+    *   Koa-router
+    *   Koa2 中间件
+    *   腾讯云 Wafer2
+    *   Mysql 数据库
+    *    数据库增删查改
+    *   Knex.js
+    *   Mysql 多表查询
+    *   小程序功能联调
+    *   小程序部署上线
 
-*   项目简介
+-   项目简介
 
 为了进一步学习 mpvue 微信小程序在实际中的应用,故发起此项目.
 
