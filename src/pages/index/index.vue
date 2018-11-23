@@ -6,13 +6,13 @@
 		<!-- seach搜索框 -->
 		<div class="index-search">
 			<div class="index-search__box">
-				<input class="box-input" type="text" @blur="searchBlur" @focus="searchFocus" placeholder="搜索书名、作者、出版社">
+				<input class="box-input" type="text" @focus="goSearchPage" placeholder="搜索书名、作者、出版社">
 			</div>
 			<image class="index-search__scanicon" :src="scanIcon" @click="scanBook"></image>
 		</div>
 
 		<!-- moto 座右铭-->
-		<div class="index-moto" @click="scrollToListTop">
+		<div class="index-moto" @click="goMotoDetails">
 			<div class="index-moto__content">
 				一个人要以清晰的心智和从容的步履走过岁月,他的精神中不能缺少淡泊. 一个人要以清晰的心智和从容的步履走过岁月,他的精神中不能缺
 			</div>
@@ -22,7 +22,7 @@
 		</div>
 
 		<!-- 已阅读时长汇总 -->
-		<div class="index-hasRead">
+		<div class="index-hasRead" @click="goReadChartsPage">
 			<div class="index-hasRead__title">
 				<span class="title-label">在图书精灵已累计阅读</span>
 				<span class="title-iconfont"></span>
@@ -131,20 +131,25 @@
 					}
 				})
 			},
-			// 查询搜索信息
-			submitSearch() {
-				console.log('submit search!')
+			// 跳转到名言详情页面
+			goMotoDetails() {
+				console.log('跳转到 motoDetails Pages!')
+				wx.navigateTo({
+					url: '/pages/moto/main?motoID=007'
+				})
 			},
-			//
-			searchBlur() {
-				console.log('Blur')
-				// this.showSearchBtn = false
-			},
-			searchFocus() {
+			// 跳转到搜索页面
+			goSearchPage() {
 				console.log('focus')
-				// this.showSearchBtn = true
 				wx.navigateTo({
 					url: '/pages/search/main?pageFrom=indexSearchBox'
+				})
+			},
+			// 跳转到readChart 页面
+			goReadChartsPage() {
+				console.log('goReadChartsPage')
+				wx.navigateTo({
+					url: '/pages/readCharts/main?pageFrom=indexSearchBox'
 				})
 			}
 		}

@@ -1,9 +1,9 @@
 {
-	"pages": ["pages/index/main", "pages/search/main", "pages/classify/main", "pages/myCenter/main", "pages/moto/main"],
+	"pages": ["pages/index/main", "pages/search/main", "pages/classify/main", "pages/myCenter/main", "pages/moto/main", "pages/readCharts/main"],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#fff",
-		"navigationBarTitleText": "图书精灵",
+		"navigationBarTitleText": "iRead",
 		"navigationBarTextStyle": "black"
 	},
 	"tabBar": {
@@ -13,6 +13,12 @@
 		"position": "bottom",
 		"selectedColor": "#1296db",
 		"list": [
+			{
+				"pagePath": "pages/index/main",
+				"text": "书架",
+				"iconPath": "./images/bookshelves.png",
+				"selectedIconPath": "./images/bookshelves-active.png"
+			},
 			{
 				"pagePath": "pages/index/main",
 				"text": "书架",

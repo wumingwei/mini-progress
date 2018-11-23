@@ -26,11 +26,11 @@
 
 			// 搜索框失去焦点
 			searchBlur() {
-
+				console.log('失去焦点')
 			},
 			// 搜索框获取焦点
 			searchFocus() {
-
+				console.log('获取焦点')
 			},
 			// 提交搜索
 			submitSearch() {
