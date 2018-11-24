@@ -29,7 +29,7 @@
 </template>
 <script>
     /*eslint-disable */
-    import { get, showToast, showModel } from '@/utils';
+    import { showToast, showModel } from '@/utils';
     import qcloud from 'wafer2-client-sdk';
     import config from '@/config';
     export default {
@@ -48,7 +48,6 @@
                 ],
             };
         },
-        async created() {},
         methods: {
             // 小程序登录接口
             wxLogin() {
@@ -63,6 +62,7 @@
                     qcloud.loginWithCode({
                         success: (res) => {
                             console.log('app.vue第二次登陆:', res);
+                            self.userInfo = res;
                             // 同步本地缓存信息
                             wx.setStorage({
                                 key: 'userInfo',
@@ -78,6 +78,7 @@
                     qcloud.login({
                         success: (res) => {
                             console.log('app.vue第一次登陆:', res);
+                            self.userInfo = res;
                             // 同步本地缓存信息
                             wx.setStorage({
                                 key: 'userInfo',
@@ -93,9 +94,9 @@
         },
         onShow() {
             let userInfo = wx.getStorageSync('userInfo');
-            console.log('userInfo:', userInfo);
+            // console.log('userInfo:', userInfo);
             if (userInfo) {
-                console.log('存在缓存信息');
+                console.log('存在缓存userInfo');
                 this.userInfo = userInfo;
             }
         },
