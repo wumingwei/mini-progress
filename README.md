@@ -6,7 +6,7 @@
 
 ```bash
 # 进入项目根目录
-cd iRead
+cd mRead
 
 # 安装依赖
 npm install
