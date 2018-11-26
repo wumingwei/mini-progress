@@ -8,7 +8,7 @@
 # 进入项目根目录
 cd mRead
 
-# 安装依赖
+# 安装依赖
 npm install
 
 # 实时编译
@@ -24,7 +24,7 @@ npm run build
 # 进入项目基于 koa的 后端根目录
 cd my-project/server
 
-# 安装依赖
+# 安装依赖
 npm install
 
 # 启动后端服务,成功后可以通过访问 localhost:5757/demo  测试结果
@@ -48,11 +48,11 @@ npm run dev
     *   vue.js 前端框架
     *   mpvue 微信小程序框架
     *   webpack 构建工具
-    *   eslint 代码  检查工具
+    *   eslint 代码检查工具
     *   前端组件化开发
     *   sass 预编译
     *   ES6 特性
-    *   async+await 
+    *   async+await
     *   小程序官方 API
     *   nodejs 网络请求
     *   Koa2 后端框架
@@ -60,7 +60,7 @@ npm run dev
     *   Koa2 中间件
     *   腾讯云 Wafer2
     *   Mysql 数据库
-    *    数据库增删查改
+    *   数据库增删查改
     *   Knex.js
     *   Mysql 多表查询
     *   小程序功能联调
@@ -68,7 +68,7 @@ npm run dev
 
 -   项目简介
 
-为了进一步学习 mpvue 微信小程序在实际中的应用,故发起此项目.
+为了进一步学习 mpvue 微信小程序在实际中的应用,故发起此项目,欢迎Fork、Start.
 
 [1]: 搭建本地微信小程序阿里云开发环境:http://baidu.com
 [2]: 本地安装mysql@5.7环境(mac平台):http://baidu.com
