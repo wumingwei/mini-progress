@@ -48,10 +48,68 @@
 
         <!-- 图书列表 -->
         <ul class="index-booklist">
+            <li class="index-booklist__item"  v-for="item in bookList ":key="item.id">
+				<div class="item-box">
+					<image class="item-box__img" :src="item.image"></image>
+					<text class="item-box__text">{{item.title}}</text>
+				</div>
+			</li>
             <li class="index-booklist__item" @click="testScrollTop">
                 <div class="addbook">十</div>
             </li>
         </ul>
+
+        <!-- 扫一扫搜索结果 -->
+        <div class="index-showBookPreview" v-if="showBookPreview">
+            <div class="container list">
+                <!-- 图片 -->
+                <img class="bgImage" :src="scanResult.images.large" />
+                <!-- 标题 -->
+                <div class="title list-item">{{'《'+scanResult.title+'》'}}</div>
+                <!-- 作者 -->
+                <!-- <div class="author list-item" v-if='scanResult.author'>{{scanResult.author+" 著"}}</div> -->
+                <!-- 作者简介 -->
+                <dl class="author-info list-item" @click="isFoldAuthorInfo=!isFoldAuthorInfo">
+                    <dt>作者简介：</dt>
+                    <dd class="author-info__details" :class="{'hasfoldauthorinfo':!isFoldAuthorInfo}">{{scanResult.author_intro}}</dd>
+                </dl>
+
+                <!-- 描述 -->
+                <dl class="des-info list-item" @click="isFoldDesInfo=!isFoldDesInfo">
+                    <dt>描述：</dt>
+                    <dd class="des-info__value" :class="{'hasfolddesinfo':!isFoldDesInfo}">{{scanResult.summary}}</dd>
+                </dl>
+
+                <!-- 更多 -->
+                <dl class="more-info list-item " @click="isFoldMore=!isFoldMore">
+                    <dt class="noborder" style="text-align:right" v-show="!isFoldMore">显示更多信息</dt>
+                    <dt class="noborder" style="text-align:right" v-show="isFoldMore">隐藏更多信息</dt>
+                    <dd class="more-info__value" :class="{'hasfoldmoreinfo':!isFoldMore}"></dd>
+                </dl>
+
+                <!-- 出版时间 -->
+                <dl class="des list-item" v-show="isFoldMore">
+                    <dt>出版时间：</dt>
+                    <dd>{{scanResult.pubdate}}</dd>
+                </dl>
+                <!-- 出版社 -->
+                <dl class="des list-item" v-show="isFoldMore">
+                     <dt>出版社：</dt>
+                    <dd>{{scanResult.publisher}}</dd>
+                </dl>
+                <!-- 参考价格 -->
+                <dl class="price-info list-item" v-show="isFoldMore">
+                    <dt>参考价格：</dt>
+                    <dd class="price-info__value">{{scanResult.price}}</dd>
+                </dl>
+
+                <!-- 按钮 -->
+                <div class="submitBtn">
+                    <div class="submitBtn__item cancel" @click="cancelAddBook">取消</div>
+                    <div class="submitBtn__item submit" @click="submitAddBook">添加</div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -64,16 +122,27 @@ import qcloud from 'wafer2-client-sdk';
 export default {
     data() {
         return {
-            motoList: [], // moto列表
-            hasRead: 100, //  已经读了多少小时的书籍
-            scanIcon: require('../../assets/images/scan.png'), // 扫码录入图书的背景icon
+            motoList: [], // 名言数据
+            bookList: [], // 我的书单列表数据
+            hasRead: 100, //  已读时长
+            scanIcon: require('../../assets/images/scan.png'), // 扫码icon
+            showBookPreview: false, // 扫一扫结果弹窗
+            scanResult: {}, // scan 结果数据
+            isFoldDesInfo: false, // 是否显示描述详情
+            isFoldAuthorInfo: false, // 是否显示作者详情
+            isFoldMore: false, // 是否显示更多图书信息
         };
     },
-    // async created() {
-    // 请求moto数据
-    // const motoList = await get('/weapp/motolist');
-    // this.motoList = motoList;
-    // },
+    async created() {
+        // 请求moto数据
+        const motoList = await get('/weapp/motolist');
+        this.motoList = motoList;
+    },
+    async onShow() {
+        console.log('onshow事件');
+        const bookList = await get('/weapp/bookList');
+        this.bookList = bookList.list;
+    },
 
     methods: {
         // 一键回到顶部
@@ -83,35 +152,86 @@ export default {
                 duration: 500,
             });
         },
-        // 添加图书
-        async addBook(isbn) {
-            const openid = wx.getStorageInfoSync('userInfo').openId;
-            console.error(openId);
-            const res = await post('/weapp/addbook', {
-                isbn,
-                openid,
+
+        // 取消添加
+        cancelAddBook() {
+            // remove isbn数据
+            wx.removeStorage({
+                key: 'scanIsbnJson',
+                success(res) {
+                    // console.log(res.data);
+                },
             });
-            if (res.code === 0 && res.data.title) {
-                showToast('success', '添加成功');
+            // hideBookPreview
+            this.showBookPreview = false;
+            // 显示tabBar
+            wx.showTabBar();
+        },
+
+        async updateBookList() {
+            const bookList = await get('/weapp/bookList');
+            this.bookList = bookList.list;
+        },
+
+        // 确定添加
+        async submitAddBook() {
+            this.addBook(this.scanResult);
+        },
+
+        // 添加图书
+        async addBook(bookinfo, cbSuccess, cbError) {
+            // console.log('addBook', wx.getStorageSync('userInfo').openId);
+            let openid = wx.getStorageSync('userInfo').openId,
+                isbn = JSON.parse(wx.getStorageSync('scanIsbnJson')).value;
+
+            const bookTitle = await post('/weapp/addbook', { isbn, openid, bookinfo });
+
+            // console.log(bookTitle);
+            if (bookTitle) {
+                showModel('添加成功', `《${bookTitle}》已经添加到我的书单里面了。`);
+                this.showBookPreview = false;
+                wx.showTabBar();
+                this.updateBookList();
+            } else {
+                showModel('添加失败', `《${bookTitle}》添加失败，请稍后重试!`);
             }
         },
+
+        // 扫描后显示图书
+        async showSearchResult(type, value) {
+            let searchResult = await post('/weapp/searchbook', { type, value });
+
+            wx.hideTabBar();
+            this.showBookPreview = true;
+            this.isFold = true;
+            this.scanResult = searchResult;
+            // console.log('isbn数据：', JSON.stringify({ type, value }));
+
+            // 缓存isbn数据
+            wx.setStorage({
+                key: 'scanIsbnJson',
+                data: JSON.stringify({ type, value }),
+            });
+        },
+
         // 扫码录入图书
         scanBook() {
             wx.scanCode({
                 success: (res) => {
                     if (res.result) {
-                        console.log(63274632864832678687, res.result);
-                        this.addBook(res.result);
+                        this.showSearchResult('isbn', res.result);
                     }
                 },
             });
         },
+
         // 跳转到名言详情页面
         goMotoDetails() {
             wx.navigateTo({
                 url: '/pages/moto/main?motoID=007',
             });
         },
+
         // 跳转到搜索页面
         goSearchPage() {
             console.log('focus');
@@ -119,6 +239,7 @@ export default {
                 url: '/pages/search/main?pageFrom=indexSearchBox',
             });
         },
+
         // 跳转到读书图表页面
         goReadChartsPage() {
             console.log('goReadChartsPage');
@@ -131,12 +252,146 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 首页
 .page-index {
     width: 100%;
-    padding: 20rpx 0;
+    height: calc(100% - 102rpx);
     padding-top: 102rpx;
     background-color: #f6f6f6;
     position: relative;
+    z-index: 0;
+
+    // 显示预览书籍结果
+    .index-showBookPreview {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1000;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        .container {
+            border-radius: 16rpx;
+            width: 78%;
+            padding: 20px 0 0;
+            background: #fff;
+            height: 500px;
+            overflow: scroll;
+
+            // dl>dt, dd
+            dl.list-item {
+                color: #666;
+                font-size: 14px;
+                font-weight: 600px;
+                line-height: 20px;
+                padding: 0 17px;
+                margin-bottom: 10px;
+
+                dt {
+                    border-left: 4px solid #666;
+                    padding-left: 6px;
+                }
+                dt.noborder {
+                    border: 0;
+                }
+                dd {
+                    text-indent: 24px;
+                }
+            }
+
+            // 图片
+            .bgImage {
+                display: block;
+                width: 200px;
+                height: 280px;
+                margin: 10px auto 10px;
+                box-shadow: 10px 10px 6px #e5e5e5;
+            }
+            // 标题
+            .title {
+                width: 100%;
+                height: 30px;
+                font-size: 16px;
+                font-weight: 600px;
+                text-align: center;
+                color: #000;
+                line-height: 30px;
+            }
+            // 作者
+            .author {
+                width: 100%;
+                height: 30px;
+                font-size: 14px;
+                font-weight: 600px;
+                text-align: center;
+                color: #666;
+                line-height: 30px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            // 作者简介
+            .author-info {
+                min-height: 40px;
+                // &__details {
+                // }
+            }
+            // 书籍描述
+            .des-info {
+                min-height: 40px;
+                // &__value {
+                // }
+            }
+            .hasfolddesinfo {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1; //显示的行数
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .hasfoldauthorinfo {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1; //显示的行数
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .submitBtn {
+                margin-top: 10px;
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                &__item {
+                    flex: 1;
+                    height: 100%;
+                    text-align: center;
+                    color: #666;
+                    border-top: 1px solid #f6f6f6;
+                }
+                &__item:active {
+                    opacity: 0.5;
+
+                    background: #cdcdcd;
+                }
+                .cancel {
+                    border-right: 1px solid #f6f6f6;
+                }
+                .submit {
+                    color: #1296db;
+                }
+            }
+        }
+    }
 
     // search
     .index-search {
@@ -144,7 +399,7 @@ export default {
         top: 0rpx;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 200;
         height: 72rpx;
         padding: 16rpx 34rpx;
         background-color: #f6f6f6;

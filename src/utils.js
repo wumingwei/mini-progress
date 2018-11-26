@@ -10,7 +10,7 @@ import config from './config';
  * @param {Object} data 请求参数
  * @returns
  */
-export function get (url, data) {
+export function get(url, data) {
     return request(url, 'GET', data);
 }
 
@@ -22,7 +22,7 @@ export function get (url, data) {
  * @param {Object} data 请求参数
  * @returns
  */
-export function post (url, data) {
+export function post(url, data) {
     return request(url, 'POST', data);
 }
 
@@ -35,27 +35,25 @@ export function post (url, data) {
  * @param {Object} header 请求头
  * @returns
  */
-function request (url, method, data, header = {}) {
+function request(url, method, data, header = {}) {
     return new Promise((resolve, reject) => {
         wx.request({
-            data,
-            method,
-            header,
             url: config.host + url,
+            method,
+            data,
+            header,
             success: function (res) {
-                if (res.data.code === 0) {
+                if (res.data.code === 200) {
                     resolve(res.data.data);
                 } else {
-                    showModel({
-                        title: '提示',
-                        content: res.data.msg
-                    });
+                    showModel('失败', res.data.data.msg);
                     reject(res.data);
                 }
             },
-            // fail: function (res) {
-            //     console.error('fail:', res);
-            // },
+            fail: function (res) {
+                console.error('fail:', res);
+                reject(res.data);
+            },
         });
     })
 }
@@ -68,12 +66,15 @@ function request (url, method, data, header = {}) {
  * @param { Number} duration
  * @param {Boolean} ifHasMask
  */
-export function showToast (type, text, duration, ifHasMask) {
+export function showToast(type, text, duration, ifHasMask, cbSuccess, cbError, cbComplete) {
     wx.showToast({
         icon: type, // success/loading/none
         title: text,
         duration: duration || 1500,
         mask: ifHasMask || false,
+        success: cbSuccess && cbSuccess(),
+        fail: cbError && cbError(),
+        complete: cbComplete && cbComplete()
     });
 }
 
@@ -82,16 +83,16 @@ export function showToast (type, text, duration, ifHasMask) {
  *
  * @param {String} title 标题
  * @param {String} content 弹窗内容
- * @param {Object} cancleConfig 取消按钮配置项
+ * @param {Object} cancelConfig 取消按钮配置项
  * @param {Object} confirmConfig 确认按钮配置项
  * @param {Function} successCallback 确认回调事件
  * @param {Function} failCallback 取消回到事件
  * @param {Function} completeCallback 完成回调事件
  */
-export function showModel (
+export function showModel(
     title,
     content,
-    cancleConfig,
+    cancelConfig,
     confirmConfig,
     successCallback,
     failCallback,
@@ -99,14 +100,14 @@ export function showModel (
 ) {
     wx.showModal({
         title: title || '提示',
-        content: content,
+        content: content || '',
 
-        showCancel: cancleConfig.showCancle || false,
-        cancelText: cancleConfig.cancelText || '取消',// 取消按钮的文字，最多 4 个字符
-        cancelColor: cancleConfig.cancelColor || '#000000',
+        showCancel: cancelConfig && cancelConfig.showCancel || false,
+        cancelText: cancelConfig && cancelConfig.cancelText || '取消', // 取消按钮的文字，最多 4 个字符
+        cancelColor: cancelConfig && cancelConfig.cancelColor || '#000000',
 
-        confirmText: confirmConfig.confirmText || '确定',// 确定按钮的文字，最多 4 个字符
-        confirmColor: confirmConfig.confirmColor || '#3CC51F',
+        confirmText: confirmConfig && confirmConfig.confirmText || '确定', // 确定按钮的文字，最多 4 个字符
+        confirmColor: confirmConfig && confirmConfig.confirmColor || '#3CC51F',
 
         success: successCallback || function () {},
         fail: failCallback || function () {},

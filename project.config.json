@@ -12,7 +12,7 @@
 	"qcloudRoot": "server/",
 	"compileType": "miniprogram",
 	"appid": "wx870e0eb3e8604a61",
-	"projectname": "iRead",
+	"projectname": "mRead",
 	"condition": {
 		"search": {
 			"current": -1,
