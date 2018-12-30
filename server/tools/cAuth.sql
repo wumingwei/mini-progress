@@ -15,7 +15,8 @@
 */
 
 SET NAMES utf8;
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS
+= 0;
 
 -- ----------------------------
 --  Table structure for `cSessionInfo`
@@ -43,4 +44,5 @@ CREATE TABLE `cSessionInfo`
 (`skey`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会话管理用户信息';
 
-SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS
+= 1;
